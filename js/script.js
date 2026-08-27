@@ -44,11 +44,11 @@ function renderBoard() {
   }
   // Shuffle the deck and create random cards
   const deck = shuffle(EMOJI_PAIRS);
-  const cards = []; 
-  isLocked = true; //prevent clicks during initial reveal 
+  const cards = [];
+  isLocked = true; //prevent clicks during initial reveal
 
   deck.forEach((emoji, index) => {
-    //AI Note: Build card elements ( previously done in HTML, now created dynamically for better control and accessibility  )
+    // Build card elements ( previously done in HTML, now created dynamically for better control and accessibility  )
     const wrapper = document.createElement("div");
     wrapper.classList.add("card-wrapper");
 
@@ -57,29 +57,29 @@ function renderBoard() {
     card.classList.add("is-flipped"); // Show face up initially
     card.setAttribute("role", "button");
     card.setAttribute("tabindex", "0");
-    //AI Note: Updated label to reflect that it's currently face up during reveal.
+    //Updated label to reflect that it's currently face up during reveal.
     card.setAttribute("aria-label", `Card ${index + 1}, face up, ${emoji}`);
     card.dataset.emoji = emoji;
     cards.push(card); // Remember this card for the reveal phase
 
-// Create front face of the card with ?
+    // Create front face of the card with ?
     const front = document.createElement("div");
     front.classList.add("card__front");
     front.textContent = "?";
-// Create back face of the card with the emoji
+    // Create back face of the card with the emoji
     const back = document.createElement("div");
     back.classList.add("card__back");
     back.textContent = emoji;
-//sticks front and back inside the card and then inside a wrapper , and finally the wrapper into the gameboard
+    //sticks front and back inside the card and then inside a wrapper , and finally the wrapper into the gameboard
     card.appendChild(front);
     card.appendChild(back);
     wrapper.appendChild(card);
     gameBoard.appendChild(wrapper);
 
-    // AI Note: Added staggered delay for a smooth dealing effect. Hooks into the card creation loop.
+    // Updated label to reflect that it's currently face up during reveal.
     wrapper.style.animationDelay = `${index * 50}ms`;
 
-    // AI Note: Added keyboard support for accessibility. Hooks into the main click logic below.
+    // Added keyboard support for accessibility. Hooks into the main click logic below.
     card.addEventListener("click", onCardClick);
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -92,7 +92,7 @@ function renderBoard() {
   // Initial card reveal phase , keeps cards face up for 2 seconds before flipping them back down and allowing player interaction.
   clearTimeout(revealTimeoutId);
   revealTimeoutId = setTimeout(() => {
-    // AI Note: Flip cards back and update accessibility labels to "face down".
+    // Updated label to reflect that it's currently face down.
     cards.forEach((c, i) => {
       c.classList.remove("is-flipped");
       c.setAttribute("aria-label", `Card ${i + 1}, face down`);
@@ -104,13 +104,18 @@ function renderBoard() {
 // Handled by top-level declarations
 
 // Updated using AI ->Card click logic - flips card and starts timer on first click, checks for matches on second click,
-//  and prevents interaction during locked state or if card is already matched. 
-// Also updates accessibility labels to reflect current state of the card (face up/down). 
+//  and prevents interaction during locked state or if card is already matched.
+// Also updates accessibility labels to reflect current state of the card (face up/down).
 // Hooks into both click and keyboard events for accessibility.
 function onCardClick(event) {
   const card = event.currentTarget;
 
-  if (isLocked || card === firstFlipped || card.classList.contains("is-matched")) return;
+  if (
+    isLocked ||
+    card === firstFlipped ||
+    card.classList.contains("is-matched")
+  )
+    return;
 
   card.classList.add("is-flipped");
   card.setAttribute("aria-label", `Card, face up, ${card.dataset.emoji}`);
@@ -156,7 +161,7 @@ function handleNoMatch() {
   isLocked = true;
   clearTimeout(matchTimeoutId);
   matchTimeoutId = setTimeout(() => {
-    // AI Note: Added defensive check to prevent error if game is restarted during this timeout.
+    // Added defensive check to prevent error if game is restarted during this timeout.
     if (firstFlipped && secondFlipped) {
       firstFlipped.classList.remove("is-flipped");
       secondFlipped.classList.remove("is-flipped");
@@ -196,15 +201,15 @@ function stopTimer() {
   clearInterval(timerInterval);
 }
 
-// AI Note:(errors and missing logics) Restart game + play again- resets all counts and starts a fresh board
+// (errors and missing logics) Restart game + play again- resets all counts and starts a fresh board
 function restartGame() {
   console.log("Restarting game..."); // Useful for user debugging
-  
+
   // 1. Immediately stop any active game logic
   stopTimer();
   clearTimeout(matchTimeoutId);
   clearTimeout(revealTimeoutId);
-  
+
   // 2. Reset all state variables
   isTimerRunning = false;
   timeElapsed = 0;
@@ -217,7 +222,7 @@ function restartGame() {
   // 3. Update UI displays
   timerDisplay.textContent = "00:00";
   movesDisplay.textContent = "0";
-  
+
   // 4. Cleanup side effects
   try {
     if (winModal) winModal.setAttribute("aria-hidden", "true");

@@ -6,7 +6,7 @@ function fireConfetti() {
   const canvas = document.getElementById("confetti-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-// Create particles with random properties
+  // Create particles with random properties
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const colors = ["#00FFEA", "#FF00C8", "#39FF14", "#FFE600", "#BF5FFF"];
