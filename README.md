@@ -22,6 +22,13 @@ An 8-card memory matching game wrapped in a cyberpunk aesthetic — neon glow pa
 The game logic — shuffling, match detection, turn state, timing — is hand-built. Some of the polish layer (the confetti celebration effect and a few accessibility hooks) was added with AI assistance on top of that base logic.
 
 ---
+## Screenshots
+
+<div align="center">
+<img src="screenshots/board-start.png" width="400" alt="Game board at start" />
+<img src="screenshots/gameplay.png" width="400" alt="Gameplay in progress" />
+<img src="screenshots/win-screen.png" width="400" alt="Win screen with confetti" />
+</div>
 
 ## How It Works
 
