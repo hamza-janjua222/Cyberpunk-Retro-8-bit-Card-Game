@@ -1,0 +1,106 @@
+/* Optimization Notes: Modular design tokens and grouped selectors for cleaner, faster rendering. */
+
+/* Design variables for colors and fonts */
+:root {
+  --bg-void: #080818;
+  --bg-panel: #0d0d2b;
+  --bg-surface: #12133a;
+  --neon-cyan: #00ffea;
+  --neon-pink: #ff00c8;
+  --neon-green: #39ff14;
+  --neon-yellow: #ffe600;
+  --neon-purple: #bf5fff;
+  --text-primary: #e8e8ff;
+  --text-secondary: #8888cc;
+  --text-dim: #44446a;
+  --font-display: "Press Start 2P", "Courier New", monospace;
+  --font-ui: "Courier New", monospace;
+  --space-unit: 8px;
+  --card-w: 112px;
+  --card-h: 148px;
+  --card-gap: 16px;
+  --border-card: 2px solid var(--neon-cyan);
+  --glow-cyan: 0 0 8px var(--neon-cyan), 0 0 20px rgba(0, 255, 234, 0.3);
+  --glow-pink: 0 0 8px var(--neon-pink), 0 0 20px rgba(255, 0, 200, 0.3);
+  --glow-purple: 0 0 8px var(--neon-purple), 0 0 16px rgba(191, 95, 255, 0.3);
+  --glow-green: 0 0 8px var(--neon-green), 0 0 20px rgba(57, 255, 20, 0.3);
+}
+
+/* Global resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page background and center align */
+body {
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video background settings */
+#bg-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 99vw;
+  height: 140vh;
+  object-fit: fill;
+  transform: translate(-50%, -50%);
+  z-index: -3;
+}
+
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(45, 0, 80, 0.4);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Retro monitor scanline effect */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.08) 3px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* Accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
